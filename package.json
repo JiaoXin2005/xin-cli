@@ -1,0 +1,16 @@
+{
+  "name": "xin-cli",
+  "version": "1.0.0",
+  "description": "my work tools",
+  "main": "index.js",
+  "scripts": {},
+  "bin": {
+    "xin-cli": "bin/xin-cli.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.11.0",
+    "shelljs": "^0.7.8"
+  }
+}
