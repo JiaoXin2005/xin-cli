@@ -7,7 +7,8 @@ var tempHosts = fs.createWriteStream(tempHostsFile)
 module.exports = {
   cmd: 'close [hostName]',
   description: '关闭host映射 --open [正则]',
-  action: function (hostNameExp) {
+  action: function (hostNameExp, options) {
+    var args = options.parent.rawArgs.slice(3)
 
     var rd = readline.createInterface({
       input: fs.createReadStream(hostsFile),
@@ -18,11 +19,13 @@ module.exports = {
     var i = 1;
     rd.on('line', function(line) {
       if (i >9) {
-        var reg = new RegExp('^'+  hostNameExp, 'g'),
-              addr = line.split(' ').pop()
-        if (reg.test(addr) && line.indexOf('#') === -1) {
-          line = `#${line}`          
-        }
+        args.forEach(arg => {
+          var reg = new RegExp('^' + arg, 'g'),
+                addr = line.split(' ').pop()
+          if (reg.test(addr) && line.indexOf('#') === -1) {
+            line = `#${line}`          
+          }
+        })
       }
       tempHosts.write(line+'\n')      
       i++;
